@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lời nhắn</title>
+
+<style>
+:root {
+  --bg-light: #fafafa;
+  --text-light: #111;
+  --bg-dark: #0f0f0f;
+  --text-dark: #eee;
+  --accent: #6b8cff;
+}
+
+[data-theme="light"] {
+  background: var(--bg-light);
+  color: var(--text-light);
+}
+
+[data-theme="dark"] {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  display: none;
+  max-width: 600px;
+  padding: 24px;
+  text-align: center;
+}
+
+section.active {
+  display: block;
+}
+
+.arrow {
+  margin-top: 32px;
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.8;
+}
+
+.arrow:hover {
+  opacity: 1;
+}
+
+/* Google-like search */
+.search-box {
+  margin-top: 40px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+.result {
+  margin-top: 32px;
+  font-size: 18px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MÀN 1 -->
+<section id="step1" class="active">
+  <p>Trước khi đến với lời nhắn riêng,<br>
+  hãy đọc lời nhắn chung trước đã nhé!</p>
+  <div class="arrow" onclick="nextStep(2)">➡️</div>
+</section>
+
+<!-- MÀN 2 -->
+<section id="step2">
+  <p>
+    Bình thường tụi mình hay gặp nhau để giữ lửa tình bạn <br>
+    nhưng bây giờ không còn gặp thường xuyên nữa, em cũng hơi sợ <br>
+    tụi mình có bức tường vô hình, đừng quên nhau nhó 🥺<br><br>
+  </p>
+  <div class="arrow" onclick="nextStep(3)">➡️</div>
+</section>
+
+<!-- MÀN 3 -->
+<section id="step3">
+  <p><strong>Nhập tên Threads của bạn để nhận được lời nhắn</strong></p>
+
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="Nhập tên Threads của bạn…"
+      onkeydown="handleSearch(event)"
+    />
+  </div>
+
+  <div id="result" class="result"></div>
+</section>
+
+<script>
+function nextStep(step) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById("step" + step).classList.add("active");
+}
+
+/* DATA LỜI NHẮN RIÊNG */
+const messages = {
+  "kkkqingan2": "Cảm ơn chị ngày ấy đã bắt chuyện với em, mong rằng chị vẫn sẽ\n là nhiệt huyết như thế, hẹn gặp nhau ở một trang mới trong cuộc đời nhé",
+  "bob": "Bob này,\nĐừng nghi ngờ bản thân quá nhiều nhé.\nBạn làm tốt hơn bạn nghĩ đó.",
+  "coc": "Cốc ơi,\nMong mọi dịu dàng của thế giới\nđều tìm đến bạn 🌙",
+  "threadsname1": "Lời nhắn dành riêng cho bạn 💌",
+  "threadsname2": "Chúc bạn luôn được yêu thương đúng cách.",
+  "threadsname3": "Bạn là một người rất đặc biệt.",
+  "threadsname4": "Cảm ơn vì đã xuất hiện trong đời mình.",
+  "threadsname5": "Mong bạn luôn bình an.",
+  "threadsname6": "Chúc bạn đủ mạnh mẽ và đủ mềm lòng.",
+  "threadsname7": "Bạn xứng đáng với những điều tốt đẹp.",
+  "threadsname8": "Một lời nhắn chỉ dành riêng cho bạn.",
+  "threadsname9": "Hy vọng bạn mỉm cười khi đọc dòng này."
+};
+
+function handleSearch(e) {
+  if (e.key === "Enter") {
+    const name = e.target.value.trim().toLowerCase();
+    const result = document.getElementById("result");
+
+    if (messages[name]) {
+      result.textContent = messages[name];
+    } else {
+      result.textContent = "Mình quen nhau dưới một cái tên khác hỏ?";
+    }
+  }
+}
+</script>
+
+</body>
+</html>
