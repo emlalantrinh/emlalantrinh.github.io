@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi" data-theme="light">
-<head>
+<head> **<link rel="preconnect" href="https://fonts.googleapis.com">**
+**<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>**
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lời nhắn</title>
@@ -15,22 +17,22 @@
 }
 
 [data-theme="light"] {
-  background: var(--bg-light);
-  color: var(--text-light);
+  background: #fdfaf4;
+  color: #333;
 }
 
 [data-theme="dark"] {
-  background: var(--bg-dark);
-  color: var(--text-dark);
+  background: #1f1f1f;
+  color: #eee;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ **font-family: EB Garamond, serif;**
+**min-height: 100vh;**
+  **display: flex;**
+  **justify-content: center;**
+  **align-items: center;**
 }
 
 section {
@@ -77,8 +79,18 @@ section.active {
   white-space: pre-line;
 }
 </style>
+  **#themeToggle {**
+**  position: fixed;**
+**  top: 16px;**
+**  right: 16px;**
+**  background: none;**
+**  border: none;**
+**  font-size: 1.4rem;**
+**  cursor: pointer;**
+**  color: inherit;**
+**}**
 </head>
-
+**<button id="themeToggle">🌓</button>**
 <body>
 
 <!-- MÀN 1 -->
