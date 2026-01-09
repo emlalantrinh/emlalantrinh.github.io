@@ -1,165 +1,117 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
-<head> **<link rel="preconnect" href="https://fonts.googleapis.com">**
-**<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>**
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Lời nhắn</title>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lời nhắn dành cho bạn</title>
 
-<style>
-:root {
-  --bg-light: #fafafa;
-  --text-light: #111;
-  --bg-dark: #0f0f0f;
-  --text-dark: #eee;
-  --accent: #6b8cff;
-}
+  <!-- Font EB Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
-[data-theme="light"] {
-  background: #fdfaf4;
-  color: #333;
-}
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fdfaf4;
+      color: #333;
+      font-family: "EB Garamond", serif;
+    }
 
-[data-theme="dark"] {
-  background: #1f1f1f;
-  color: #eee;
-}
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+    }
 
-body {
-  margin: 0;
- **font-family: EB Garamond, serif;**
-**min-height: 100vh;**
-  **display: flex;**
-  **justify-content: center;**
-  **align-items: center;**
-}
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
 
-section {
-  display: none;
-  max-width: 600px;
-  padding: 24px;
-  text-align: center;
-}
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      outline: none;
+      box-sizing: border-box;
+      text-align: center;
+    }
 
-section.active {
-  display: block;
-}
+    input::placeholder {
+      color: #999;
+    }
 
-.arrow {
-  margin-top: 32px;
-  font-size: 28px;
-  cursor: pointer;
-  user-select: none;
-  opacity: 0.8;
-}
+    button {
+      margin-top: 16px;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: none;
+      border-radius: 999px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+    }
 
-.arrow:hover {
-  opacity: 1;
-}
-
-/* Google-like search */
-.search-box {
-  margin-top: 40px;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 14px 18px;
-  border-radius: 999px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  outline: none;
-}
-
-.result {
-  margin-top: 32px;
-  font-size: 18px;
-  line-height: 1.6;
-  white-space: pre-line;
-}
-</style>
-  **#themeToggle {**
-**  position: fixed;**
-**  top: 16px;**
-**  right: 16px;**
-**  background: none;**
-**  border: none;**
-**  font-size: 1.4rem;**
-**  cursor: pointer;**
-**  color: inherit;**
-**}**
+    .message {
+      margin-top: 32px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      display: none;
+    }
+  </style>
 </head>
-**<button id="themeToggle">🌓</button>**
+
 <body>
+  <div class="container">
+    <h1>Hãy nhập tên Threads của bạn<br>để nhận được lời nhắn</h1>
 
-<!-- MÀN 1 -->
-<section id="step1" class="active">
-  <p>Trước khi đến với lời nhắn riêng,<br>
-  hãy đọc lời nhắn chung trước đã nhé!</p>
-  <div class="arrow" onclick="nextStep(2)">➡️</div>
-</section>
-
-<!-- MÀN 2 -->
-<section id="step2">
-  <p>
-    Bình thường tụi mình hay gặp nhau để giữ lửa tình bạn <br>
-    nhưng bây giờ không còn gặp thường xuyên nữa, em cũng hơi sợ <br>
-    tụi mình có bức tường vô hình, đừng quên nhau nhó 🥺<br><br>
-  </p>
-  <div class="arrow" onclick="nextStep(3)">➡️</div>
-</section>
-
-<!-- MÀN 3 -->
-<section id="step3">
-  <p><strong>Nhập tên Threads của bạn để nhận được lời nhắn</strong></p>
-
-  <div class="search-box">
     <input
+      id="nameInput"
       type="text"
-      placeholder="Nhập tên Threads của bạn…"
-      onkeydown="handleSearch(event)"
+      placeholder="vd: muopkhongdang"
     />
+
+    <button onclick="showMessage()">Xem lời nhắn</button>
+
+    <div id="message" class="message"></div>
   </div>
 
-  <div id="result" class="result"></div>
-</section>
+  <script>
+    const messages = {
+      "rainydenny": "Chị là người đầu tiên em gặp trong vũ trụ\nGai Con & Trà Phê, có vẻ như nhờ vía mở bát\ncủa chị nên trộm vía freebies Sẵn Sàng Chưa của em\nvẫn được rất nhiều người thích. Chúc chị có thật\nnhiều sức khoẻ, nhiều xèng để có thể đu đồng an\nU40 dài dài. Cảm ơn vì đã đến,\nhẹn gặp lại ở một trang mới trong cuộc đời.",
+      "_phgtrmn": "Chị trong mắt em là một cô nàng trầm tính,\nít nói, khéo tay nhưng bù lại lại sống rất tình cảm.\nEm mong chị sẽ luôn thấy thế giới ngoài kia\nnhẹ nhàng với chị lắm, đừng buồn vì những chuyện\nchẳng đáng để bận tâm nhé! Giữ gìn sức khoẻ,\nmình còn trẻ, đừng bào mòn. Chúc chị luôn kiên định\nvới sự lựa chọn của mình và gặp may mắn\ntrên con đường chị đi. Cảm ơn vì 29/10\nđã đến Trà Phê, em yêu chị nhiều,\nhẹn gặp lại ở một trang mới của cuộc đời nhé!",
+      "muopkhongdang": "Cảm ơn bạn đã ghé qua đây. Mong là bạn luôn được yêu thương theo cách bạn xứng đáng.",
+      "threadsname1": "Lời nhắn dành riêng cho bạn nè ✨",
+      "threadsname2": "Chúc bạn một năm thật hiền và đủ đầy."
+      // thêm tối đa ~10 tên tuỳ bạn
+    };
 
-<script>
-function nextStep(step) {
-  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-  document.getElementById("step" + step).classList.add("active");
-}
+    function showMessage() {
+      const input = document.getElementById("nameInput").value.trim().toLowerCase();
+      const messageBox = document.getElementById("message");
 
-/* DATA LỜI NHẮN RIÊNG */
-const messages = {
-  "kkkqingan2": "Cảm ơn chị ngày ấy đã bắt chuyện với em, mong rằng chị vẫn sẽ\n là nhiệt huyết như thế, hẹn gặp nhau ở một trang mới trong cuộc đời nhé",
-  "bob": "Bob này,\nĐừng nghi ngờ bản thân quá nhiều nhé.\nBạn làm tốt hơn bạn nghĩ đó.",
-  "coc": "Cốc ơi,\nMong mọi dịu dàng của thế giới\nđều tìm đến bạn 🌙",
-  "threadsname1": "Lời nhắn dành riêng cho bạn 💌",
-  "threadsname2": "Chúc bạn luôn được yêu thương đúng cách.",
-  "threadsname3": "Bạn là một người rất đặc biệt.",
-  "threadsname4": "Cảm ơn vì đã xuất hiện trong đời mình.",
-  "threadsname5": "Mong bạn luôn bình an.",
-  "threadsname6": "Chúc bạn đủ mạnh mẽ và đủ mềm lòng.",
-  "threadsname7": "Bạn xứng đáng với những điều tốt đẹp.",
-  "threadsname8": "Một lời nhắn chỉ dành riêng cho bạn.",
-  "threadsname9": "Hy vọng bạn mỉm cười khi đọc dòng này."
-};
+      if (!input) {
+        messageBox.style.display = "block";
+        messageBox.textContent = "Bạn chưa nhập tên Threads kìa 🌱";
+        return;
+      }
 
-function handleSearch(e) {
-  if (e.key === "Enter") {
-    const name = e.target.value.trim().toLowerCase();
-    const result = document.getElementById("result");
-
-    if (messages[name]) {
-      result.textContent = messages[name];
-    } else {
-      result.textContent = "Mình quen nhau dưới một cái tên khác hỏ?";
+      messageBox.style.display = "block";
+      messageBox.textContent =
+        messages[input] ||
+        "Mình không có lời nhắn riêng cho tên này, nhưng vẫn chúc bạn một ngày thật dịu 🤍";
     }
-  }
-}
-</script>
-
+  </script>
 </body>
 </html>
